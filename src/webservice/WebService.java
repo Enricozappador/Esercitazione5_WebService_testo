@@ -9,6 +9,8 @@ public class WebService {
 	private LinkedList<Acquirente> acquirenti;
 	private int numAdmin;
 	private int numAcq;
+	private LinkedList<Log> logins; 
+	private int numLog; 
 	 
 	
 	
@@ -17,10 +19,12 @@ public class WebService {
 		utenti = new LinkedList<Utente>();
 		admin = new LinkedList<Admin>();
 		acquirenti = new LinkedList<Acquirente>();
+		logins = new LinkedList<Log>();
 		
 		numUtenti = 0;
 		numAdmin = 0;
 		numAcq = 0;
+		numLog = 0; 
 		
 	}
 	
@@ -73,7 +77,19 @@ public class WebService {
 	}
 	
 	public Utente loginUtente(String email, String password, String timestamp) {
-		return null;
+		Utente utemp = cercaUtente(email);
+		if (utemp.getPassword().compareTo(password)!=0)
+			utemp = null; 
+		for(Log l : logins)
+			if(l!=null && l.getUtenti().getEmail().compareTo(email)==0) {
+				if(l.isLoggedin() == true)
+					utemp = null; 
+				else 
+					logins.add(numLog++, l);
+			}
+		
+		
+		return utemp;
 	}
 	
 	public Utente logoutUtente(String email, String timestamp) {
@@ -81,7 +97,13 @@ public class WebService {
 	}
 	
 	public Utente verificaConnessioneUtente(String email) {
-		return null;
+		Utente utemp = null;  
+		for (Log l : logins)
+			if (l!= null && l.getUtenti().getEmail().compareTo(email)==0 && l.isLoggedin() == true) 
+			utemp = l.getUtenti();
+			
+				
+		return utemp;
 	}
 		
 	public Utente eliminaUtente(String email, String password, String emailUtenteDaEliminare ) {
