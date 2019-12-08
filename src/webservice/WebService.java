@@ -11,8 +11,8 @@ public class WebService {
 	private int numAcq;
 	private LinkedList<Log> logins; 
 	private int numLog; 
-	private int login;
-	private int logout; 
+	//private int login;
+	//private int logout; 
 	 
 	
 	
@@ -27,8 +27,8 @@ public class WebService {
 		numAdmin = 0;
 		numAcq = 0;
 		numLog = 0; 
-		login = 0; 
-		logout = 0; 
+		//login = 0; 
+		//logout = 0; 
 		
 	}
 	
@@ -82,26 +82,34 @@ public class WebService {
 	
 	public Utente loginUtente(String email, String password, String timestamp) {
 		Utente utemp = cercaUtente(email);
-		Log logtemp = new Log(utemp, false, timestamp) ;
+		Log logtemp = new Log(utemp, true, timestamp) ;
+		int countlogin = 0;
+		int countlogout = 0;
 		if (utemp == null)
 			return null; 
 		
 		if (utemp.getPassword().compareTo(password)!=0)
 			utemp = null; 
 		
-		for(Log l : logins)
+		for(Log l : logins) {
 			if(l!=null && l.getUtenti().getEmail().compareTo(email)==0) {
-				if(l.isLoggedin()== false) 
+				if(l.isLoggedin() == true)
 				{
-					logtemp = l; 
-					logtemp.setLoggedin(true); 
-			logins.add(numLog++, logtemp);
+					countlogin++;
 
 				}
+				else if(l.isLoggedin()== false)
+					countlogout++;
 				
 			}
-			else 
-				utemp = null; 
+		}
+		if(countlogin < countlogout) {
+			logins.add(logtemp);
+			numLog++;
+		}
+			
+			/*else 
+				utemp = null; */
 		
 		
 		return utemp;
@@ -109,43 +117,107 @@ public class WebService {
 	
 	public Utente logoutUtente(String email, String timestamp) {
 		Utente utemp = cercaUtente(email); 
-		Log logtemp = new Log(utemp, true, timestamp); 
+		Log logtemp = new Log(utemp, false, timestamp); 
+		int login = 0 ;
+		int logoff = 0; 
 		if(utemp == null)
 			return null; 
 		
 		//if(utemp.getPassword().compareTo(password)!= 0 )
 			// utemp = null; 
 		
-		for(Log l : logins)
+		for(Log l : logins) {
 			if(l != null && l.getUtenti().getEmail().compareTo(email)==0)
-				if (l.isLoggedin()==true)
-				{
-					logtemp = l; 
-					logtemp.setLoggedin(false);
-					logins.add(numLog++, logtemp);
-				}
-				else 
-					utemp=null; 
 			
+				{
+					if (l.isLoggedin()== true)
+					{
+						login++;
+					}
+					else if(l.isLoggedin()== false)
+						logoff++;
+				}
+		}
+	
+		if (login == logoff+1) {
+			logins.add(logtemp);
+			numLog++;
+		}
 		
-		return null;
+		return utemp;
 	}
 	
 	public Utente verificaConnessioneUtente(String email) {
-		Utente utemp = null;  
-		for (Log l : logins)
-			if (l!= null && l.getUtenti().getEmail().compareTo(email)==0 && l.isLoggedin() == true) 
-			utemp = l.getUtenti();
+		Utente utemp = cercaUtente(email);  
+		int numlogin = 0;
+		int numlogoff = 0;
 		
+		if (utemp == null)
+			return null;
+		
+		for (Log l : logins) {
+			if (l!= null && l.getUtenti().getEmail().compareTo(email)==0) {
+				if(l.isLoggedin()==true) {
+					numlogin++;
+				}
+					
+				else if (l.isLoggedin()==false)
+					numlogoff++;
+			}
+		
+		}
+	
+		
+		if (numlogin == numlogoff+1)
+			utemp = null;
 			
 				
 		return utemp;
 	}
 		
 	public Utente eliminaUtente(String email, String password, String emailUtenteDaEliminare ) {
-		Utente uelimtemp = null; 
-		Utente ueliminatotemp = null; 
+		Utente uelimtemp = cercaUtente(email); 
+		Utente ueliminatotemp = cercaUtente(emailUtenteDaEliminare); 
+		Log logtemp = new Log(ueliminatotemp, false, "cancellato");
 		
+		if(uelimtemp.getPassword().compareTo(password)!=0)
+			ueliminatotemp = null;
+		
+		else 
+		{
+			if(uelimtemp instanceof Admin && uelimtemp!=null)
+			{ uelimtemp = verificaConnessioneUtente(email);
+			if(uelimtemp!=null) {
+				if(ueliminatotemp instanceof Acquirente)
+					return ueliminatotemp;
+				else if (ueliminatotemp instanceof Admin && uelimtemp.getEmail().compareTo(ueliminatotemp.getEmail())==0)
+			//	if()
+					return ueliminatotemp;
+			}
+			else 
+				ueliminatotemp = null; 
+			}
+			else if(uelimtemp instanceof Acquirente && uelimtemp!=null)
+			{
+				uelimtemp = verificaConnessioneUtente(email);
+				if (uelimtemp != null) {
+					if(uelimtemp.getEmail().compareTo(ueliminatotemp.getEmail())==0)
+						return ueliminatotemp;
+				}
+				else 
+					ueliminatotemp = null;
+				
+			}
+				
+				
+		}
+		
+		if(ueliminatotemp != null) {
+			logins.add(logtemp);
+			numLog++;
+		}
+		
+			
 		
 		return ueliminatotemp;
 	}
@@ -157,7 +229,37 @@ public class WebService {
 	}	
 	
 	public String elencoAccessiUtentePerTimestamp(String email) {
-		return null;
+		Utente utemp = cercaUtente(email);
+		String toString = " ";
+		if(utemp==null)
+			toString = null;
+	/*	for(Log l : logins)
+			if(l!=null & l.getUtenti().getEmail().compareTo(email)==0) {
+				if(l.isLoggedin()==true)
+					toString += "Login : "+l.getTimestamp();
+			//	else 
+					//if(l.isLoggedin()==false)
+			//		toString += "Logout : "+l.getTimestamp();
+			}
+				*/
+		for(int i = 0 ; i<numLog; i++) {
+			if(logins.get(i)!=null && logins.get(i).getUtenti().getEmail().compareTo(email)==0) {
+				//if(logins.get(i).isLoggedin()== true)
+					//toString += "login : "+logins.get(i).getTimestamp();
+				//else
+					if(logins.get(i).isLoggedin()==false)
+					toString += "logout : "+logins.get(i).getTimestamp();
+
+				if(i!= numLog-1)
+					toString+="\n";
+				
+				}else 
+					toString+= null;
+				
+			}
+				
+				
+		return toString;
 	}
 	
 	public String elencoUtentiConnessiPerDataNascita() {
