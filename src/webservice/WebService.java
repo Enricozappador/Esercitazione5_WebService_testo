@@ -11,6 +11,8 @@ public class WebService {
 	private int numAcq;
 	private LinkedList<Log> logins; 
 	private int numLog; 
+	private int login;
+	private int logout; 
 	 
 	
 	
@@ -25,6 +27,8 @@ public class WebService {
 		numAdmin = 0;
 		numAcq = 0;
 		numLog = 0; 
+		login = 0; 
+		logout = 0; 
 		
 	}
 	
@@ -78,21 +82,52 @@ public class WebService {
 	
 	public Utente loginUtente(String email, String password, String timestamp) {
 		Utente utemp = cercaUtente(email);
+		Log logtemp = new Log(utemp, false, timestamp) ;
+		if (utemp == null)
+			return null; 
+		
 		if (utemp.getPassword().compareTo(password)!=0)
 			utemp = null; 
+		
 		for(Log l : logins)
 			if(l!=null && l.getUtenti().getEmail().compareTo(email)==0) {
-				if(l.isLoggedin() == true)
-					utemp = null; 
-				else 
-					logins.add(numLog++, l);
+				if(l.isLoggedin()== false) 
+				{
+					logtemp = l; 
+					logtemp.setLoggedin(true); 
+			logins.add(numLog++, logtemp);
+
+				}
+				
 			}
+			else 
+				utemp = null; 
 		
 		
 		return utemp;
 	}
 	
 	public Utente logoutUtente(String email, String timestamp) {
+		Utente utemp = cercaUtente(email); 
+		Log logtemp = new Log(utemp, true, timestamp); 
+		if(utemp == null)
+			return null; 
+		
+		//if(utemp.getPassword().compareTo(password)!= 0 )
+			// utemp = null; 
+		
+		for(Log l : logins)
+			if(l != null && l.getUtenti().getEmail().compareTo(email)==0)
+				if (l.isLoggedin()==true)
+				{
+					logtemp = l; 
+					logtemp.setLoggedin(false);
+					logins.add(numLog++, logtemp);
+				}
+				else 
+					utemp=null; 
+			
+		
 		return null;
 	}
 	
@@ -101,16 +136,23 @@ public class WebService {
 		for (Log l : logins)
 			if (l!= null && l.getUtenti().getEmail().compareTo(email)==0 && l.isLoggedin() == true) 
 			utemp = l.getUtenti();
+		
 			
 				
 		return utemp;
 	}
 		
 	public Utente eliminaUtente(String email, String password, String emailUtenteDaEliminare ) {
-		return null;
+		Utente uelimtemp = null; 
+		Utente ueliminatotemp = null; 
+		
+		
+		return ueliminatotemp;
 	}
 	
 	public String elencoUtentiPerEmail() {
+		for (Utente u : utenti )
+		utenti.sort'm'8);
 		return null;
 	}	
 	
