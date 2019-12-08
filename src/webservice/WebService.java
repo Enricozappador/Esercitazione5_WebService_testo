@@ -151,8 +151,8 @@ public class WebService {
 	}
 	
 	public String elencoUtentiPerEmail() {
-		for (Utente u : utenti )
-		utenti.sort'm'8);
+		//for (Utente u : utenti )
+		//utenti.sort'm'8);
 		return null;
 	}	
 	
