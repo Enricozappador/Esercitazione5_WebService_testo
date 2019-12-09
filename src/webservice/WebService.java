@@ -240,14 +240,16 @@ public class WebService {
 	
 	public String elencoUtentiPerEmail() {
 		String toString = ""; 
+		
 		for (int i = 0; i<numUtenti; i++ ) {
 			if(utenti.get(i)!= null ) {
 				toString += utenti.get(i).toString(); 
 				if(i!= numUtenti-1)
 					toString+="\n";
 				
-				}else 
-					toString+= null;
+				}
+			//else 
+				//	toString+= null;
 				
 			
 		
@@ -291,13 +293,24 @@ public class WebService {
 	}
 	
 	public String elencoUtentiConnessiPerDataNascita() {
-		LinkedList<Utente> utemp = null; 
+		LinkedList<Utente> utemp = utenti; 
+		int numutemp = numUtenti;
+	//	String connect= "";
+		/*for (int i = 0 ; i<numUtenti; i++) {
+			if(utenti.get(i)!=null )
+				//	&& verificaConnessioneUtente(utenti.get(i).getEmail())==null)
+				{
+			utemp.remove(utenti.get(i));
+			numutemp = numutemp-1;
+		
 		/*for (Utente u : utenti)
 			if(u!=null)
 			{
 				utemp = verificaConnessioneUtente(); 
 			}
-		*/
+		
+		}
+		}*/
 		String toString="";
 		
 		//toString = utenti.toString(); 
@@ -307,13 +320,16 @@ public class WebService {
 				utemp += verificaConnessioneUtente(u.getEmail()); 
 				*/
 		for (int i = 0; i<numUtenti; i++ ) {
-			if(utenti.get(i)!= null ) {
+			if(utemp.get(i)!= null && verificaConnessioneUtente(utenti.get(i).getEmail())!=null) {
+				//if (verificaConnessioneUtente(utenti.get(i).getEmail())!=null)
 				toString += utenti.get(i).toString(); 
+				
 				if(i!= numUtenti-1)
 					toString+="\n";
 				
-				}else 
-					toString+= null;
+				}
+			//else 
+				//	toString+= null;
 		}
 		return toString;
 	
@@ -329,8 +345,9 @@ public class WebService {
 					)
 					toString+="\n";
 				
-				}else 
-					toString+= null;
+				}
+			//else 
+				//	toString+= null;
 		}
 		
 		return toString;
