@@ -65,11 +65,12 @@ public class WebService {
 	        }
 	        	
 
+	        Utente uttemp = new Utente(utemp.getNome(), utemp.getCognome(), utemp.getEmail(), null, utemp.getDataNascita()); 
 	         
 
 
 
-	        return utemp;
+	        return uttemp;
 	}
 	
 	public Utente cercaUtente(String email) {
@@ -241,8 +242,8 @@ public class WebService {
 		String toString = ""; 
 		for (int i = 0; i<numUtenti; i++ ) {
 			if(utenti.get(i)!= null ) {
-				toString += utenti.get(i).getEmail()+" "+utenti.get(i).getCognome()+" "+utenti.get(i).getNome();
-				if(i!= numLog-1)
+				toString += utenti.get(i).toString(); 
+				if(i!= numUtenti-1)
 					toString+="\n";
 				
 				}else 
@@ -290,9 +291,14 @@ public class WebService {
 	}
 	
 	public String elencoUtentiConnessiPerDataNascita() {
-		LinkedList<Utente> utemp = utenti; 
-		
-		//String toString="";
+		LinkedList<Utente> utemp = null; 
+		/*for (Utente u : utenti)
+			if(u!=null)
+			{
+				utemp = verificaConnessioneUtente(); 
+			}
+		*/
+		String toString="";
 		
 		//toString = utenti.toString(); 
 		/*String utemp = ""; 
@@ -300,33 +306,34 @@ public class WebService {
 			if(u != null)
 				utemp += verificaConnessioneUtente(u.getEmail()); 
 				*/
-	/*	for (int i = 0; i<numUtenti; i++ ) {
+		for (int i = 0; i<numUtenti; i++ ) {
 			if(utenti.get(i)!= null ) {
-				toString += utenti.get(i).getEmail()+" "+utenti.get(i).getCognome()+" "+utenti.get(i).getNome();
-				if(i!= numLog-1)
+				toString += utenti.get(i).toString(); 
+				if(i!= numUtenti-1)
 					toString+="\n";
 				
 				}else 
 					toString+= null;
 		}
-		return toString;*/
-		return utemp.toString(); 
+		return toString;
+	
 	}
 	
 	public String elencoUtentiPerCognome() {
 		//ArrayList <Utente> utemp= utenti; 
-	/*	String toString="";
+	  String toString="";
 		for (int i = 0; i<numUtenti; i++ ) {
 			if(utenti.get(i)!= null ) {
-				toString += utenti.get(i).getEmail()+" "+utenti.get(i).getCognome()+" "+utenti.get(i).getNome();
-				if(i!= numLog-1)
+				toString += utenti.get(i).toString(); 
+			if(i!= numUtenti-1
+					)
 					toString+="\n";
 				
 				}else 
 					toString+= null;
-		}*/
+		}
 		
-		return utenti.toString();
+		return toString;
 		
 	}		
 }

@@ -1,6 +1,6 @@
 package webservice;
 
-import java.util.LinkedList;
+//import java.util.LinkedList;
 
 public class Utente {
 	private String nome;
@@ -8,7 +8,7 @@ public class Utente {
 	private String email;
 	private String psw;
 	private String data;
-	private LinkedList<Utente> utenti; 
+//	private LinkedList<Utente> utenti; 
 	
 	public Utente(String nome, String cognome, String email, String psw, String data) {
 		super();
@@ -72,5 +72,8 @@ public class Utente {
     	
     	return email+" "+cognome+" "+nome; 
     }
+	public void setPsw(String psw) {
+		this.psw = psw;
+	}
 	
 }
