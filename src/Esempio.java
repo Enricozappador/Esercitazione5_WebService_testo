@@ -63,6 +63,8 @@ public class Esempio {
 		w.loginUtente("fabio.garcea@polito.it", "Pwd67890", "2019-12-03 00:58:25");
 	
 		
+	
+		
 		System.out.println("\nVerifica connessione utente Fabio Garcea");
 		
 		Utente uConnesso = w.verificaConnessioneUtente("fabio.garcea@polito.it");

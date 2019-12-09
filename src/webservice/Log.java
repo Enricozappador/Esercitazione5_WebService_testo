@@ -7,7 +7,7 @@ public class Log {
 	public Log(Utente utenti, boolean loggedin, String timestamp) {
 		super();
 		this.utenti = utenti;
-		this.loggedin = loggedin = false;
+		this.loggedin = loggedin;
 		this.timestamp = timestamp;
 	}
 	public Utente getUtenti() {

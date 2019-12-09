@@ -1,11 +1,14 @@
 package webservice;
 
+import java.util.LinkedList;
+
 public class Utente {
 	private String nome;
 	private String cognome;
 	private String email;
 	private String psw;
 	private String data;
+	private LinkedList<Utente> utenti; 
 	
 	public Utente(String nome, String cognome, String email, String psw, String data) {
 		super();
@@ -58,6 +61,16 @@ public class Utente {
 
         return flag;
 
-    } 
+    }
+    @Override
+    public String toString() { 
+    	/*String string =""; 
+    	for (Utente u : utenti)
+    	if(u!=null)
+    		string += u.getEmail()+" "+u.getCognome()+" "+u.getNome(); 
+    		*/
+    	
+    	return email+" "+cognome+" "+nome; 
+    }
 	
 }
