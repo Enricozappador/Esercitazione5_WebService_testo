@@ -1,9 +1,13 @@
 package webservice;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
 public class Log {
 	private Utente utenti; 
 	private boolean loggedin; 
 	private String timestamp;
+	LinkedList<String> time = new LinkedList<String>();
 	public Log(Utente utenti, boolean loggedin, String timestamp) {
 		super();
 		this.utenti = utenti;
@@ -34,5 +38,12 @@ public class Log {
 		return null;
 		
 	}*/
+	
+	public void ordinatime(String timestamp) {
+		
+		time.add(timestamp);
+		
+		Collections.sort(time);
+	}
 
 }

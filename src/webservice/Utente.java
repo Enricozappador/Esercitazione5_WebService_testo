@@ -1,5 +1,8 @@
 package webservice;
 
+import java.util.Collections;
+import java.util.LinkedList;
+
 //import java.util.LinkedList;
 
 public class Utente {
@@ -75,5 +78,17 @@ public class Utente {
 	public void setPsw(String psw) {
 		this.psw = psw;
 	}
+	public void printpsw (String psw) {
+		
+	}
+	
+	public void ordinaemail (String email) {
+		LinkedList<String> mail = new LinkedList<String>();
+		
+		Collections.sort(mail);
+		
+	}
+	
+	
 	
 }
