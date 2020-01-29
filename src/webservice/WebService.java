@@ -36,6 +36,7 @@ public class WebService {
 	
 	public Utente registraUtente(String nome, String cognome, String email, String password, String dataNascita) {
 		Utente utemp = new Utente(nome, cognome, email, password, dataNascita);
+		Utente utemp2 = null;
 		boolean islower = false; 
 		boolean isupper = false; 
 		boolean isnumber = false; 
@@ -46,8 +47,8 @@ public class WebService {
 		LinkedList<Utente>utentifittizio = new LinkedList <Utente>();
 		LinkedList<Acquirente> acquirentefittizio = new LinkedList <Acquirente>();*/
 		 String controllo = "@";
-		 
-		 
+		
+	       
 	        for (Utente u : utenti)
 	            if (u != null && u.getEmail().equalsIgnoreCase(email) == true) {
 
@@ -58,16 +59,22 @@ public class WebService {
 	        if (numUtenti == 0)
 	        {
 	        	Admin atemp = new Admin(nome, cognome, email, password, dataNascita);
+	        	Admin atemp2 =  new Admin(nome, cognome, email, null, dataNascita);
 	        	admin.add(numAdmin++, atemp);
 	        	utemp = atemp;
 	        	 utenti.add(numUtenti++, utemp);
+	        	 utemp2=atemp2;
+	        	 
 	        }
 	        else 
 	        {
 	        	Acquirente actemp = new Acquirente(nome, cognome, email, password, dataNascita);
+	        	Acquirente actemp2 = new Acquirente(nome, cognome, email, null, dataNascita);
 	        	acquirenti.add(numAcq++, actemp);
 	        	utemp=actemp;
 	        	 utenti.add(numUtenti++,utemp);
+	        	 utemp2=actemp2;
+	        	
 	        }
 	        	
 
@@ -90,7 +97,7 @@ public class WebService {
 	        uttemp.setPsw(null);
 */
 	        //uttemp.setPsw(null);
-for (int i= 0 ; i<password.length(); i++) {
+	         for (int i= 0 ; i<password.length(); i++) {
 			 char ch = password.charAt(i);
 			 if (Character.isLowerCase(ch)==true)
 				 islower = true;
@@ -99,19 +106,22 @@ for (int i= 0 ; i<password.length(); i++) {
 			 if(Character.isDigit(ch) == true)
 				 isnumber = true; 
 		 }
-		 
-	        if (email.contains(controllo)== false)
-	            utemp=null;
+		  
 	        
 	       if (password.length()<8 || islower == false || isupper == false || isnumber == false
 	    		   //|| utemp.controllLowerCase(password)== false || utemp.controllUpperCase(password)== false
-	    		   )
+	    		   ) {
 	            utemp = null;
+	            utemp2=null;
+	       }
+	       if (email.contains(controllo)== false) {
+	            utemp=null;
+	            utemp2 = null; 
+	       }
+	      return utemp2;
 	       
 	       
-	       
-	       
-	        return utemp;
+	     //   return utemp;
 	        
 	}
 	
